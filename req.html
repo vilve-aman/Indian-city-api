@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Test Obj</title>
+</head>
+<body>
+    Hi.................... 
+
+    <form action="">
+            <input type="text" id="inp">
+    </form>
+
+    <div id="suggest-box">
+        <div id="suggest"></div>
+    </div>
+
+
+    <script>
+
+        const inp = document.getElementById('inp');
+        inp.addEventListener('keyup',(e)=>{
+            // console.log(inp.value)
+            let data = {
+                'auth-token' : 1234,
+                'msg' : 'hi there string bhej rha hu',
+                'query' : `${inp.value}`
+            }
+
+            let url = 'http://localhost:3000/';
+            let options = {
+                'method' : 'POST',
+                'header' : {
+                    'content-type' : 'application/json',
+                },
+                'body' : JSON.stringify(data)
+                // 'body' : 'hi there string bhej rha hu'
+            }
+            
+
+            fetch(url,options)
+            .then((response) =>{    return response.json()  } )
+            .then((data) =>{
+                let arr = data.msg
+                // console.log(arr);
+
+                let suggest = document.getElementById('suggest')
+                suggest.remove()
+                
+                suggest = document.createElement('div')
+                document.getElementById('suggest-box').appendChild(suggest);
+                suggest.setAttribute('id','suggest');
+
+                for(let i=0 ; i<arr.length ; i++){
+                    let li = document.createElement('li')
+                    li.innerText = `${arr[i]}`
+                    suggest.appendChild(li);
+                }
+            }) 
+
+
+        })
+
+
+
+
+
+    </script>
+</body>
+</html>
